@@ -1,0 +1,11 @@
+[{:itonami.blueprint/social-impact [:food-safety :worker-safety :production-continuity]
+  :itonami.blueprint/domain :food-processing/butcher-shop-scheduling-coordination
+  :itonami.blueprint/required-technologies [:robotics :identity :audit-ledger]
+  :itonami.blueprint/isco-08 "7511"
+  :itonami.blueprint/name "Butcher Shop Scheduling Coordination Practice"
+  :itonami.blueprint/governor :butcher-governor
+  :itonami.blueprint/robotics true
+  :db/id -1
+  :itonami.blueprint/status :public-oss
+  :itonami.blueprint/id "cloud-itonami-isco-7511"
+  :itonami.blueprint/license "AGPL-3.0-or-later"}]
