@@ -16,7 +16,7 @@ as a `langgraph.graph/state-graph` (`butcher.actor`) wired to a
 pattern (ADR-2607121000): `:intake -> :advise -> :govern -> :decide -+->
 :commit (:ok?) +-> :request-approval (:escalate?, human-in-the-loop
 interrupt) +-> :hold (:hard?)`. 24 tests / 52 assertions green
-(`clojure -M:test`). HARD invariants (always hold, never overridable): worker
+(`kbb -M:test`). HARD invariants (always hold, never overridable): worker
 provenance, shop provenance, no-actuation (`:effect` must be `:propose`),
 a closed op-allowlist (`:log-work-record`, `:schedule-crew-operation`,
 `:flag-safety-concern`, `:coordinate-supply-order` — nothing else may
