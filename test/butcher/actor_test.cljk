@@ -1,5 +1,5 @@
 (ns butcher.actor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [butcher.actor :as actor]
             [butcher.store :as store]))
 
