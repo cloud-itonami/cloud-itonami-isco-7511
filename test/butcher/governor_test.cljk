@@ -1,5 +1,5 @@
 (ns butcher.governor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [butcher.store :as store]
             [butcher.advisor :as advisor]
             [butcher.governor :as governor]))
