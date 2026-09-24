@@ -1,0 +1,44 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a shop scheduling/logistics coordination robot
+;; handles crew scheduling, task/batch records and meat/fish-stock supply
+;; orders for a butcher-shop/fishmonger crew (ISCO 7511). Its physical work:
+;; carrying boxes of fish on ice from the cold room to the counter, lifting
+;; primal cuts onto the cutting block, and the chilling of a cut in the
+;; chiller (the core temperature the crew must reach).
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-7511"
+ :cases
+ [{:id :fish-boxes-to-counter
+   :kind :transport
+   :procedure "cart carries boxes of fish on ice from the cold room to the shop counter"
+   :params {:mass-kg 45.0 :distance-m 15.0 :v-max-mps 0.8 :a-max-mps2 0.4
+            :brake-decel-mps2 0.6 :drive-force-n 100.0 :crr 0.02
+            :cog-height-m 0.50 :support-half-length-m 0.25 :max-time-s 1200.0}
+   :sweep {:param :payload-kg :values [15.0 40.0 80.0 150.0 250.0]}
+   :quantity :cycle-time-s
+   :limit {:max 30.0 :basis "estimate: keep the cold-room-to-counter leg short so the product is out of refrigeration only briefly"}
+   :boundary {:lo 5.0 :hi 1000.0}}
+  {:id :primal-onto-block
+   :kind :manipulator
+   :procedure "arm lifts a primal cut from the hanging rail tray onto the cutting block"
+   :params {:l1-m 0.60 :l2-m 0.50 :m1-kg 8.0 :m2-kg 6.0
+            :from [0.50 0.60] :to [0.80 0.20] :duration-s 3.0 :steps 500}
+   :sweep {:param :payload-kg :values [2.0 5.0 10.0 15.0 25.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 150.0 :basis "estimate: continuous shoulder torque of a 10 kg-payload class collaborative arm at ~1.1 m reach"}
+   :boundary {:lo 0.5 :hi 60.0}}
+  {:id :primal-chill-core
+   :kind :thermal
+   :procedure "a warm primal cut (38 C) hangs 24 h in 2 C forced-air chiller; core = insulated symmetry plane"
+   :params {:thickness-m 0.10 :conductivity-w-mk 0.45 :density-kg-m3 1050.0 :specific-heat-j-kgk 3500.0
+            :t0-c 38.0 :t-hot-c 2.0 :h-front-w-m2k 15.0 :h-back-w-m2k 0.0 :t-back-ambient-c 2.0
+            :threshold-c 100.0 :duration-s 86400.0 :nodes 11}
+   :sweep {:param :thickness-m :values [0.05 0.08 0.10 0.13 0.16]}
+   :quantity :final-back-c
+   :limit {:max 7.0 :basis "estimate: the 24 h chilling window is assumed; the 7 C core limit for meat other than offal is Regulation (EC) No 853/2004 Annex III Section I Chapter VII"}
+   :boundary {:lo 0.02 :hi 0.25}}]}
