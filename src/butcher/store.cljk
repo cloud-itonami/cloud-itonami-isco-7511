@@ -1,6 +1,6 @@
 (ns butcher.store
   "SSoT for the ISCO-08 7511 butcher-shop/fishmonger scheduling/logistics
-  coordination actor (itonami actor pattern, ADR-2607121000 / CLAUDE.md
+  coordination actor (itonami actor pattern, ADR-2607121000 / AGENTS.md
   Actors section; README's 'Robotics premise' — a shop scheduling/logistics
   coordination robot performs crew scheduling, task/batch/progress-record
   logging and meat/fish-stock supply-order coordination for a butcher/
